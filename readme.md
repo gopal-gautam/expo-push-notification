@@ -4,7 +4,7 @@ This package will provide the notification channel for expo push notification
 
 ## Setup
 
-    composer require 
+    composer require gopal-gautam/laravel-expo-notification-channel
     php artisan vendor:publish
 
 ## Prepare your model
