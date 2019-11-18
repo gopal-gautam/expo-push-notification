@@ -1,5 +1,5 @@
 {
-    "name": "gopal/laravel-expo-notification-channel",
+    "name": "gopal-gautam/laravel-expo-notification-channel",
     "description": "Expo push notification channel for laravel projects",
     "type": "library",
     "require": {
