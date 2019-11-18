@@ -1,0 +1,27 @@
+{
+    "name": "gopal/laravel-expo-notification-channel",
+    "description": "Expo push notification channel for laravel projects",
+    "type": "library",
+    "require": {
+        "guzzlehttp/guzzle": "^6.5@dev"
+    },
+    "authors": [
+        {
+            "name": "Gopal Gautam",
+            "email": "gopal_007gautam@hotmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Gopal\\ExpoNotificationChannel\\ExpoNotificationServiceProvider"
+            ]
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Gopal\\ExpoNotificationChannel\\": "src/"
+        }
+    }
+}
