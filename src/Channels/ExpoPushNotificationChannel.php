@@ -2,36 +2,38 @@
 
 namespace Gopal\ExpoNotificationChannel\Channels;
 
+use Gopal\LaravelExpoNotificationChannel\ExpoPushNotifiable;
 use Illuminate\Notifications\Notification;
 use GuzzleHttp\Client as HttpClient;
 
 class ExpoPushNotificationChannel
 {
-    protected $http;
+    protected $httpClient;
     protected $url;
 
-    public function __construct(HttpClient $http)
+    public function __construct(HttpClient $httpClient)
     {
-        $this->http = $http;
+        $this->httpClient = $httpClient;
         $this->url = 'https://exp.host/--/api/v2/push/send';
     }
 
     public function send($notifiable, Notification $notification)
     {
         if (!method_exists($notification, 'toExpo')) {
-            throw new \RuntimeException('Notification is missing toExpo method.');
+            throw new \RuntimeException('toExpo method is required for notification');
         }
-        $data = $notification->toExpo($notifiable);
-        $this->sendTokens($notifiable, $notification, $data);
+        $payload = $notification->toExpo($notifiable);
+        $this->sendTokens($notifiable, $notification, $payload);
     }
 
     private function sendTokens($notifiable, Notification $notification, $payload)
     {
+        /** @var ExpoPushNotifiable $notifiable */
         $tokens = collect($notifiable->routeNotificationForExpo());
         $tokens->each(function ($to, $key) use ($notifiable, $notification, $payload) {
             $payload = $this->buildMessage($notification->toExpo($notifiable));
             $payload['to'] = $to;
-            $this->http->request('POST', $this->url, ['json' => $payload]);
+            $this->httpClient->request('POST', $this->url, ['json' => $payload]);
         });
     }
 
